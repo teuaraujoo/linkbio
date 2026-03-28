@@ -1,0 +1,378 @@
+/* =========================================================================
+   VARIABLES & DESIGN TOKENS
+   ========================================================================= */
+:root {
+    --bg-color: #050505;
+    --surface-color: rgba(255, 255, 255, 0.02);
+    --surface-hover: rgba(255, 255, 255, 0.05);
+    --border-color: rgba(255, 255, 255, 0.06);
+    --border-hover: rgba(139, 92, 246, 0.4);
+    
+    --text-primary: #ffffff;
+    --text-secondary: #a1a1aa;
+    
+    --accent-color: #8b5cf6;
+    --accent-vibrant: #a78bfa;
+    --accent-glow: rgba(139, 92, 246, 0.25);
+    
+    --font-heading: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-ui: 'Montserrat', sans-serif;
+    
+    --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* =========================================================================
+   RESET & BASE STYLES
+   ========================================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========================================================================
+   BACKGROUND EFFECTS (Dark & Sophisticated)
+   ========================================================================= */
+.bg-glow {
+    position: fixed;
+    top: -20vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80vw;
+    height: 60vh;
+    background: radial-gradient(circle, var(--accent-glow) 0%, rgba(5, 5, 5, 0) 70%);
+    filter: blur(100px);
+    z-index: -2;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.bg-noise {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.015;
+    z-index: -1;
+    pointer-events: none;
+}
+
+#particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* =========================================================================
+   LAYOUT
+   ========================================================================= */
+.container {
+    width: 100%;
+    max-width: 640px;
+    padding: 3rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+}
+
+/* =========================================================================
+   HEADER & PROFILE
+   ========================================================================= */
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 3rem;
+    width: 100%;
+}
+
+.avatar-container {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Placeholder for the user's actual image (img tag would be placed here) */
+.avatar-placeholder {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #18181b, #09090b);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    z-index: 2;
+    position: relative;
+    overflow: hidden;
+}
+
+.avatar-placeholder img {
+    object-fit: cover;
+    width: 80%;
+    height: 100%;
+}
+
+/* Avatar Ring Animation */
+.avatar-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, transparent, transparent, var(--accent-vibrant));
+    animation: rotate 4s linear infinite;
+    z-index: 1;
+    opacity: 0.5;
+    filter: blur(3px);
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.logo-text {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.25rem;
+}
+
+.logo-text .dot {
+    color: var(--accent-color);
+}
+
+.subtitle {
+    font-family: var(--font-ui);
+    font-size: 0.95rem;
+    font-weight: 600;
+    background: linear-gradient(90deg, var(--text-secondary), var(--text-primary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+
+.description {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 480px;
+    margin-bottom: 2rem;
+}
+
+/* =========================================================================
+   BADGES
+   ========================================================================= */
+.badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+.badge {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.4rem 0.8rem;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    color: var(--text-secondary);
+    backdrop-filter: blur(10px);
+    transition: var(--transition-smooth);
+}
+
+.badge:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-glow);
+    background: rgba(139, 92, 246, 0.1);
+}
+
+/* =========================================================================
+   LINKS SECTION
+   ========================================================================= */
+.links-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+.link-card {
+    display: flex;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    text-decoration: none;
+    color: var(--text-primary);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    transition: var(--transition-smooth);
+    z-index: 1;
+}
+
+.link-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255,255,255,0.03), transparent);
+    opacity: 0;
+    transition: var(--transition-smooth);
+    z-index: -1;
+}
+
+.link-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    margin-right: 1.25rem;
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    transition: var(--transition-smooth);
+    border: 1px solid rgba(255,255,255,0.02);
+}
+
+.link-title {
+    font-family: var(--font-ui);
+    font-size: 1.05rem;
+    font-weight: 500;
+    flex-grow: 1;
+    letter-spacing: 0.01em;
+}
+
+.link-arrow {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    opacity: 0.5;
+    transition: var(--transition-smooth);
+}
+
+/* Desktop & Hover States */
+@media (hover: hover) {
+    .link-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--border-hover);
+        background: var(--surface-hover);
+        box-shadow: 0 12px 24px -10px rgba(139, 92, 246, 0.15);
+    }
+    
+    .link-card:hover::before {
+        opacity: 1;
+    }
+
+    .link-card:hover .link-icon {
+        color: var(--accent-vibrant);
+        background: rgba(139, 92, 246, 0.1);
+        border-color: rgba(139, 92, 246, 0.2);
+    }
+
+    .link-card:hover .link-arrow {
+        color: var(--accent-vibrant);
+        opacity: 1;
+        transform: translate(2px, -2px);
+    }
+}
+
+/* Emphasized highlight link (e.g. for main product/store) */
+.highlight-link {
+    border-color: rgba(139, 92, 246, 0.3);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(139, 92, 246, 0.05) 100%);
+    margin-top: 0.5rem;
+}
+
+.card-glow {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                rgba(139, 92, 246, 0.1), 
+                transparent 40%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.highlight-link:hover .card-glow {
+    opacity: 1;
+}
+
+/* =========================================================================
+   FOOTER
+   ========================================================================= */
+.footer {
+    margin-top: 4rem;
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    opacity: 0.6;
+}
+
+/* =========================================================================
+   RESPONSIVE DESIGN (Mobile First adjusted for Desktop)
+   ========================================================================= */
+@media (max-width: 480px) {
+    .container {
+        padding: 2rem 1.25rem;
+    }
+    
+    .link-card {
+        padding: 1rem 1.25rem;
+    }
+    
+    .link-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 1.25rem;
+    }
+    
+    .logo-text {
+        font-size: 1.75rem;
+    }
+}
